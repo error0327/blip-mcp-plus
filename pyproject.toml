@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blip-mcp"
+version = "0.1.0"
+description = "Model Context Protocol (MCP) server and CLI for Blip (blip.net) file transfer."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Marcello", email = "264715505+marcellopps283@users.noreply.github.com" }
+]
+keywords = ["mcp", "model-context-protocol", "blip", "file-transfer", "p2p", "cli", "ai-agent"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications :: File Sharing",
+]
+dependencies = [
+    "mcp>=1.2.0",
+    "pydantic>=2.0",
+    "click>=8.0",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+
+[project.scripts]
+blip-mcp = "blip_mcp.cli:main"
+blip-server = "blip_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

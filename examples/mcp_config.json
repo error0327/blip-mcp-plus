@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "blip": {
+      "command": "blip-mcp",
+      "args": ["serve"],
+      "description": "Blip peer-to-peer file dispatcher for mobile devices."
+    }
+  }
+}
