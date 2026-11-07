@@ -1,4 +1,4 @@
-# Send a ChatGPT file through Blip
+# Blip MCP Plus
 
 This independent fork adds a local, send-only ChatGPT tool to [Marcello's Blip MCP server](https://github.com/marcellopps283/blip-mcp). With the connector running, ask **"Send this PDF to my phone."** ChatGPT supplies a file reference, the PC fetches its bytes, and the installed Blip app dispatches it to your paired device. Accept the transfer on the receiving device if prompted.
 
@@ -8,8 +8,8 @@ This independent fork adds a local, send-only ChatGPT tool to [Marcello's Blip M
 2. In PowerShell, install the fork and activate its environment.
 
 ~~~powershell
-git clone https://github.com/error0327/blip-mcp.git
-cd blip-mcp
+git clone https://github.com/error0327/blip-mcp-plus.git
+cd blip-mcp-plus
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e .
 .\.venv\Scripts\Activate.ps1

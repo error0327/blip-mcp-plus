@@ -14,7 +14,7 @@ from typing_extensions import NotRequired, TypedDict
 
 from blip_mcp.core import BlipClient
 
-mcp = FastMCP("Chat file sender for Blip")
+mcp = FastMCP("Blip MCP Plus")
 blip = BlipClient()
 MAX_BYTES = 256 * 1024 * 1024
 
