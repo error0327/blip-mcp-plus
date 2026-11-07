@@ -1,3 +1,43 @@
+# Send a ChatGPT file through Blip
+
+This independent fork adds a local, send-only ChatGPT tool to [Marcello's Blip MCP server](https://github.com/marcellopps283/blip-mcp). With the connector running, ask **"Send this PDF to my phone."** ChatGPT supplies a file reference, the PC fetches its bytes, and the installed Blip app dispatches it to your paired device. Accept the transfer on the receiving device if prompted.
+
+## Connect ChatGPT on Windows
+
+1. Install Blip, sign in, and make one transfer to the intended device so Blip has a record of it.
+2. In PowerShell, install the fork and activate its environment.
+
+~~~powershell
+git clone https://github.com/error0327/blip-mcp.git
+cd blip-mcp
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e .
+.\.venv\Scripts\Activate.ps1
+~~~
+
+3. Follow the [OpenAI Secure MCP Tunnel guide](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels) to install the tunnel client, create a tunnel associated with your ChatGPT workspace, and provide its runtime key locally. In the activated environment run these commands, substituting your tunnel ID.
+
+~~~powershell
+tunnel-client init --sample sample_mcp_stdio_local --profile blip-chat --tunnel-id YOUR_TUNNEL_ID --mcp-command blip-chat
+tunnel-client doctor --profile blip-chat --explain
+tunnel-client run --profile blip-chat
+~~~
+
+4. Keep that terminal running. In ChatGPT Plugins, choose **Add custom MCP server**, select **Tunnel**, choose your tunnel and finish setup. The tool scan should show `send_chat_file` and `list_devices`. Anyone with access to this connection can initiate a transfer from your Blip account. Use a connection restricted to you.
+5. In the conversation containing the file, select the connector and ask it to send that file. If you have multiple recipients, specify one by exact name or device ID. Check receipt on the destination. A successful tool result means Blip accepted the dispatch command.
+
+## File support and local storage
+
+The tool accepts one file per call, up to 256 MiB. PDFs, images and other binary files use the same path. ChatGPT must supply the file as a [file input](https://developers.openai.com/plugins/reference#define-file-inputs). Whether a generated item is available as a file depends on the ChatGPT surface. A conversation, plain text reply, or sandbox path alone cannot supply the bytes.
+
+The PC stages files under `~/.blip-mcp/outbox` in separate folders so Blip can finish asynchronous transfers. After confirming delivery you can remove completed folders manually. Failed downloads are discarded. A failed or interrupted dispatch may leave a staged file.
+
+Download requests allow HTTPS hosts under `oaiusercontent.com` and check each redirect. If your workspace uses another verified file-storage hostname, set `BLIP_CHAT_FILE_HOSTS` to its exact hostname before starting the tunnel. Multiple exact hostnames may be separated by commas. Restrict this list to trusted file storage.
+
+## Original local tools
+
+The original CLI and local-path MCP server remain available as documented below.
+
 # blip-mcp
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
